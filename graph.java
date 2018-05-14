@@ -22,6 +22,13 @@ public class AdjListsGraph<T> //implements Graph<T>
         
     }
     //clone method
+    public AdjListsGraph(AdjListsGraph g) {
+    this.vertices = (Vector<T>)g.vertices.clone();
+    this.arcs = new Vector<LinkedList<StudentCourseLabel>>();
+    for(int i=0; i<g.vertices.size(); i++){
+      this.arcs.addElement((LinkedList<StudentCourseLabel>)((LinkedList<T>)g.arcs.get(i)).clone());
+    } 
+  }
     
     public boolean isEmpty(){
         return vertices.isEmpty(); // or this.getNumVertices() == 0
@@ -177,8 +184,9 @@ public class AdjListsGraph<T> //implements Graph<T>
     }
     
     public LinkedList<T> dfsTraversal(T start, T end) {
-        LinkedList<String> search = new LinkedList<String>();
-        AdjListsGraph<T> graph = this.clone();
+        LinkedList<T> search = new LinkedList<T>();
+        LinkedList<String> labels = new LinkedList<String>();
+        AdjListsGraph<T> graph = new AdjListsGraph<T>(this);
         if(!graph.containsVertex(start)){
             return search;
         }
@@ -198,20 +206,28 @@ public class AdjListsGraph<T> //implements Graph<T>
             }
             else{
                 StudentCourseLabel nextNode = connections.get(0);
-                traversalStack.push(nextNode);
-                if(!search.contains(nextNode)){
-                    search.add(nextNode);
+                String label = nextNode.getCourse();
+                T student = vertices.get(nextNode.getSucc());
+                
+                traversalStack.push(student);
+                
+                if(!search.contains(student)){
+                    search.add(student);
+                    labels.add(label);
                 }
                 connections.pop();
             }
              
         }
-        for(int i = 0; i<search.size(); i++){
-            System.out.print(search.get(i) + "is connected to " );
+        for(int i = 0; i<labels.size(); i++){
+            System.out.print(search.get(i)+ "-->"+labels.get(i)+"-->");
         }
+        System.out.print(search.get(search.size()-1));
         return search;
      }
-     
+    // public String traversalToString(){
+        
+    // }
     /******************************************************************
 //    Returns a string representation of the graph. 
 //    ******************************************************************/
@@ -235,6 +251,7 @@ public class AdjListsGraph<T> //implements Graph<T>
         g0.addVertex(s1);
         g0.addVertex(s2);
         g0.addEdge(s1, s2, "CS111");
+        
         //test isEmpty
         //System.out.println("Testing isEmpty. Expecting: true. Got: " + g0.isEmpty());
         //test getNumArcs
@@ -243,6 +260,7 @@ public class AdjListsGraph<T> //implements Graph<T>
         System.out.println("Testing getNumVertices. Expecting: 2. Got: " + g0.getNumVertices());
         System.out.println(g0);
         
+        g0.dfsTraversal(s1,s2);
         //g0.addVertex("Z");
         //g0.addVertex("K");
         //g0.saveToTGF("test0.tgf");
