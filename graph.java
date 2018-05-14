@@ -11,14 +11,14 @@ public class AdjListsGraph<T> //implements Graph<T>
 {
     // instance variables - 
     private Vector<T> vertices;
-    private Vector<LinkedList<T>> arcs;
+    private Vector<LinkedList<StudentCourseLabel>> arcs;
 
     /**
      * Constructor for objects of class AdjListsGraphProject
      */
     public AdjListsGraph(){
         vertices = new Vector<T>();
-        arcs = new Vector<LinkedList<T>>();
+        arcs = new Vector<LinkedList<StudentCourseLabel>>();
         
     }
     //clone method
@@ -46,10 +46,21 @@ public class AdjListsGraph<T> //implements Graph<T>
         //add vertex
         vertices.addElement(vertex);
         //add its corresponding empty list of connections
-        arcs.addElement(new LinkedList<T>());
+        arcs.addElement(new LinkedList<StudentCourseLabel>());
         //System.out.println("size of vertices: " + vertices.size());
     }
     //make new courseStudent connection to add to linkedList
+    /******************************************************************
+    * Inserts an edge between two vertices of the graph.
+    * If one or both vertices do not exist, ignores the addition.
+    ******************************************************************/
+  public void addEdge (T vertex1, T vertex2, String course) {
+    // getIndex will return NOT_FOUND if a vertex does not exist,
+    // and the addArc() will not insert it
+    this.addArc (vertex1, vertex2, course);
+    addArc (vertex2, vertex1, course);
+  }
+  
     /**
      * adds course connection between two students
      * insert both ways
@@ -60,9 +71,11 @@ public class AdjListsGraph<T> //implements Graph<T>
             return;
         }
         int n1 = vertices.indexOf(student1);
-        StudentCourseLabel label = new StudentCourseLabel(student2, course);
+        int n2 = vertices.indexOf(student2);
         
-        LinkedList<T> l = arcs.get(n1);
+        StudentCourseLabel label = new StudentCourseLabel(course, n2);
+        
+        LinkedList<StudentCourseLabel> l = arcs.get(n1);
         //if n1 to n2 arc already exists
         if(l.contains(label)){return;}
         
@@ -75,6 +88,7 @@ public class AdjListsGraph<T> //implements Graph<T>
         T student1 = vertices.get(v1);
         T student2 = vertices.get(v2);
         addArc(student1, student2, course);
+        addArc(student2, student1, course);
     }
     
     public void removeVertex (T v){
@@ -84,31 +98,39 @@ public class AdjListsGraph<T> //implements Graph<T>
         arcs.remove(index);
         //remove from all linked list wherever it appears
         for(int i = 0; i<arcs.size(); i++){
-            LinkedList<T> ll = arcs.get(i);
+            LinkedList<StudentCourseLabel> ll = arcs.get(i);
             ll.remove(v);
         }
     }
     
-    public static AdjListsGraph<String> AdjListsGraphFromFile(String f){
-        AdjListsGraph<String> g = new AdjListsGraph<String>();
-        try{
-            Scanner scan = new Scanner(new File(f));
-            while(!scan.next().equals("#")){//read and discard the token
-                //int n = scan.nextInt();
-                String s = scan.next();
-                g.addVertex(s);
-            }
-            while(scan.hasNext()){
-                int n1 = scan.nextInt();
-                int n2 = scan.nextInt();
-                g.addArc(n1-1, n2-1);
-            }
-            scan.close();
-        }catch(IOException e){
-            System.out.println("Cannot read from " + f);
-        }
-        return g;
-    }
+    // public static AdjListsGraph<String> AdjListsGraphFromFile(String f){
+        // AdjListsGraph<String> g = new AdjListsGraph<String>();
+        // try{
+            // Scanner scan = new Scanner(new File(f));
+            // while(scan.hasNext()){
+                // //int n = scan.nextInt();
+                // String s = scan.next();
+                // String[] line = s.split(";");
+                // String[] courseListString = line[2].split(",");
+                
+                // LinkedList<String> courses = new LinkedList<String>();
+                // for (int i = 0; i< courseListString.length; i++){
+                    // courses.add(courseListString[0]);
+                // }
+                // Student currentStudent = new Student(line[0], line[1], courses);
+                // g.addVertex(currentStudent);
+            // }
+            // while(scan.hasNext()){
+                // int n1 = scan.nextInt();
+                // int n2 = scan.nextInt();
+                // g.addArc(n1-1, n2-1);
+            // }
+            // scan.close();
+        // }catch(IOException e){
+            // System.out.println("Cannot read from " + f);
+        // }
+        // return g;
+    // }
     
     public void saveToTGF(String f){
         //System.out.println("size of vertices: " + vertices.size());
@@ -121,10 +143,11 @@ public class AdjListsGraph<T> //implements Graph<T>
             
             //go down the arcs vector
             for (int i = 0; i<arcs.size(); i++){
-                LinkedList<T> ll = arcs.get(i);
+                LinkedList<StudentCourseLabel> ll = arcs.get(i);
                 for (int j = 0; j<ll.size(); j++){
-                    T vertex = ll.get(j);
-                    int to = vertices.indexOf(vertex);
+                    StudentCourseLabel label = ll.get(j);
+                   
+                    int to = label.getSucc();
                     printer.println((i+1) + " " + (to+1));
                 }
             }
@@ -134,27 +157,28 @@ public class AdjListsGraph<T> //implements Graph<T>
         }
     }
     
-    public LinkedList<T> getSuccessors(T vertex){
-        int index = vertices.indexOf(vertex);
-        return arcs.get(index);
-    }
+    // public LinkedList<StudentCourseLabel> getSuccessors(T vertex){
+        // int index = vertices.indexOf(vertex);
+        // return arcs.get(index);
+    // }
     
-    public LinkedList<T> getPredecessors(T vertex){
-        LinkedList<T> temp = new LinkedList<T>();
-        for(int i = 0; i<arcs.size(); i++){
-            LinkedList<T> ll = arcs.get(i);
-            if(ll.contains(vertex)){
-                temp.add(vertices.get(i));
-            }
-        }
-        return temp;
-    }
+    // public LinkedList<StudentCourseLabel> getPredecessors(T vertex){
+        // LinkedList<StudentCourseLabel> temp = new LinkedList<StudentCourseLabel>();
+        // for(int i = 0; i<arcs.size(); i++){
+            // LinkedList<StudentCourseLabel> ll = arcs.get(i);
+            // if(ll.contains(vertex)){
+                // temp.add(vertices.get(i));
+            // }
+        // }
+        // return temp;
+    // }
     public boolean containsVertex( T vertex){
         return vertices.contains(vertex);
     }
+    
     public LinkedList<T> dfsTraversal(T start, T end) {
-        LinkedList<T> search = new LinkedList<T>();
-        AdjListsGraph<T> graph = (AdjListsGraph<T>)this.clone();
+        LinkedList<String> search = new LinkedList<String>();
+        AdjListsGraph<T> graph = this.clone();
         if(!graph.containsVertex(start)){
             return search;
         }
@@ -168,12 +192,12 @@ public class AdjListsGraph<T> //implements Graph<T>
          {
             currentVertex = traversalStack.peek();
             int index = graph.vertices.indexOf(currentVertex);
-            LinkedList<T> connections = graph.arcs.get(index);
+            LinkedList<StudentCourseLabel> connections = graph.arcs.get(index);
             if(connections.isEmpty()){
                 traversalStack.pop();
             }
             else{
-                T nextNode = connections.get(0);
+                StudentCourseLabel nextNode = connections.get(0);
                 traversalStack.push(nextNode);
                 if(!search.contains(nextNode)){
                     search.add(nextNode);
@@ -182,8 +206,12 @@ public class AdjListsGraph<T> //implements Graph<T>
             }
              
         }
+        for(int i = 0; i<search.size(); i++){
+            System.out.print(search.get(i) + "is connected to " );
+        }
         return search;
      }
+     
     /******************************************************************
 //    Returns a string representation of the graph. 
 //    ******************************************************************/
@@ -196,19 +224,25 @@ public class AdjListsGraph<T> //implements Graph<T>
     result = result + "\n\nEdges: \n";
     for (int i=0; i< vertices.size(); i++)
       result = result + "from " + vertices.get(i) + ": "  + arcs.get(i) + "\n";
-   
+    
+      
     return result;
   }
     public static void main(String[] args){
-        AdjListsGraph<String> g0 = new AdjListsGraph<String>();
+        AdjListsGraph<Student> g0 = new AdjListsGraph<Student>();
+        Student s1 = new Student("alee31", "alicia");
+        Student s2 = new Student("clee48", "camila");
+        g0.addVertex(s1);
+        g0.addVertex(s2);
+        g0.addEdge(s1, s2, "CS111");
         //test isEmpty
         //System.out.println("Testing isEmpty. Expecting: true. Got: " + g0.isEmpty());
         //test getNumArcs
-        //System.out.println("Testing getNumArcs. Expecting: 0. Got: " + g0.getNumArcs());
+        System.out.println("Testing getNumArcs. Expecting: 1. Got: " + g0.getNumArcs());
         //test getNumVertices
-        //System.out.println("Testing getNumVertices. Expecting: 0. Got: " + g0.getNumVertices());
+        System.out.println("Testing getNumVertices. Expecting: 2. Got: " + g0.getNumVertices());
+        System.out.println(g0);
         
-        g0.addVertex("A");
         //g0.addVertex("Z");
         //g0.addVertex("K");
         //g0.saveToTGF("test0.tgf");
