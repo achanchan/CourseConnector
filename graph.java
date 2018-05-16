@@ -35,19 +35,18 @@ public class CourseConnectorGraph<T> //implements Graph<T>
        Enumeration<String> allCourses = hashtable.keys();
        
        
-       for(int i = 0; i<hashtable.size(); i++){
+      for(int i = 0; i<hashtable.size(); i++){
            String course = allCourses.nextElement();
            Vector studentsInCourse = hashtable.get(course);
-
-           for(int j = 0; j<studentsInCourse.size(); j++){
-               
+           
+          for(int j = 0; j< studentsInCourse.size(); j++){
                g.addVertex(studentsInCourse.get(j));
-            }
-           for(int k = 0; k< studentsInCourse.size() -1; k++){
-               for(int l= k; l<studentsInCourse.size()-1;l++){
-               g.addEdge(studentsInCourse.get(l), studentsInCourse.get(l+1), course);
-            }
-            }
+           }
+           for(int k = 0; k< studentsInCourse.size()-1; k++){
+               for(int p=k; p<studentsInCourse.size()-1;p++){
+                   g.addEdge(studentsInCourse.get(k), studentsInCourse.get(p+1), course);
+                }
+           }
         }
        
        return g;
