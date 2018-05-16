@@ -44,7 +44,9 @@ public class CourseConnectorGraph<T> //implements Graph<T>
                g.addVertex(studentsInCourse.get(j));
             }
            for(int k = 0; k< studentsInCourse.size() -1; k++){
-               g.addEdge(studentsInCourse.get(k), studentsInCourse.get(k+1), course);
+               for(int l= k; l<studentsInCourse.size()-1;l++){
+               g.addEdge(studentsInCourse.get(l), studentsInCourse.get(l+1), course);
+            }
             }
         }
        
@@ -203,8 +205,23 @@ public class CourseConnectorGraph<T> //implements Graph<T>
     public boolean containsVertex( T vertex){
         return vertices.contains(vertex);
     }
+    private T usernameToStudent(String username){
+        boolean found = false;
+        int i = 0;
+        while(!found){
+            if(username.equals(vertices.get(i))){
+                found = true;
+            }
+            else{
+                i++;
+            }
+        }
+        return (vertices.get(i));
+    }
     
-    public LinkedList<T> dfsTraversal(T start, T end) {
+    public LinkedList<T> dfsTraversal(String startUsername, String endUsername) {
+        T start = this.usernameToStudent(startUsername);
+        T end = this.usernameToStudent(endUsername);
         LinkedList<T> search = new LinkedList<T>();
         LinkedList<String> labels = new LinkedList<String>();
         CourseConnectorGraph<T> graph = new CourseConnectorGraph<T>(this);
@@ -259,9 +276,19 @@ public class CourseConnectorGraph<T> //implements Graph<T>
     result = result + vertices;
     
     result = result + "\n\nEdges: \n";
-    for (int i=0; i< vertices.size(); i++)
-      result = result + "from " + vertices.get(i) + ": "  + arcs.get(i) + "\n";
-    
+    for (int i=0; i< vertices.size(); i++){
+       result = result + "from " + vertices.get(i) + ": [";
+       LinkedList<StudentCourseLabel> labelsLinkedList = arcs.get(i);
+       for(int j = 0; j < labelsLinkedList.size(); j++){
+           StudentCourseLabel label= labelsLinkedList.get(j);
+           String course = label.getCourse();
+           int nextStudentIndex = label.getSucc(); 
+           T stud = vertices.get(nextStudentIndex);
+           result+= " course: " + course + " next student: " + stud;
+        }
+      
+        result+="]\n";
+    }
       
     return result;
   }
@@ -275,10 +302,10 @@ public class CourseConnectorGraph<T> //implements Graph<T>
         
         ClassRoster classRoster = new ClassRoster();
         Hashtable hash = classRoster.createRoster("connections");
-        
+        System.out.println(hash);
         CourseConnectorGraph<Student> rosterGraph = graphFromHash(hash);
-        System.out.println(rosterGraph);
-       
+        //System.out.println(rosterGraph);
+        //rosterGraph.dfsTraversal("bchang31", "ckang29");
         
         //test isEmpty
         //System.out.println("Testing isEmpty. Expecting: true. Got: " + g0.isEmpty());
@@ -296,7 +323,7 @@ public class CourseConnectorGraph<T> //implements Graph<T>
         // CourseConnectorGraph<String> g = CourseConnectorGraphFromFile("g5.tgf");
         // //System.out.println("The number of vetices: (3)" + g.getNumVertices());
         // //System.out.println("The number of arcs: (3)" + g.getNumArcs());
-        // //g.saveToTGF("gOut.tgf");
+        rosterGraph.saveToTGF("gOut.tgf");
         
         // System.out.println("Predecessors of 3: [1,2,4] " + g.getPredecessors("3"));
         // System.out.println("Successors of 2: [3] " + g.getSuccessors("2"));
