@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class CourseConnectorGraphProject here.
  *
@@ -241,25 +240,29 @@ public class CourseConnectorGraph<T> //implements Graph<T>
          {
             currentVertex = traversalStack.peek();
             int index = graph.vertices.indexOf(currentVertex);
-            //try{
-            LinkedList<StudentCourseLabel> connections = graph.arcs.get(index);
-            if(connections.isEmpty()){
-                traversalStack.pop();
-            }
-            else{
-                StudentCourseLabel nextNode = connections.get(0);
-                String label = nextNode.getCourse();
-                T student = vertices.get(nextNode.getSucc());
-                
-                traversalStack.push(student);
-                
-                if(!search.contains(student)){
-                    search.add(student);
-                    labels.add(label);
+            try{
+                LinkedList<StudentCourseLabel> connections = graph.arcs.get(index);
+                if(connections.isEmpty()){
+                    traversalStack.pop();
                 }
-                connections.pop();
+                else{
+                    StudentCourseLabel nextNode = connections.get(0);
+                    String label = nextNode.getCourse();
+                    T student = vertices.get(nextNode.getSucc());
+                
+                    traversalStack.push(student);
+                
+                    if(!search.contains(student)){
+                        search.add(student);
+                        labels.add(label);
+                    }
+                    connections.pop();
+                }
             }
-             
+            catch (ArrayIndexOutOfBoundsException ex){
+                System.out.println("There is no connection.");
+                break;
+            }
         }
         for(int i = 0; i<labels.size(); i++){
             finalTraversal.add(search.get(i).toString());
@@ -301,15 +304,15 @@ public class CourseConnectorGraph<T> //implements Graph<T>
     public static void main(String[] args){
         // CourseConnectorGraph<Student> g0 = new CourseConnectorGraph<Student>();
         Student s1 = new Student("alee31", "alicia");
-        Student s2 = new Student("clee48", "camila");
+        //Student s2 = new Student("clee48", "camila");
         Student s3 = new Student("achan", "amy");
         
         Vector<Student> cs111 = new Vector<Student>();
         cs111.add(s1);
-        cs111.add(s2);
+        //cs111.add(s2);
         
         Vector<Student> cs230 = new Vector<Student>();
-        cs230.add(s2);
+        //cs230.add(s2);
         cs230.add(s3);
         // g0.addVertex(s1);
         // g0.addVertex(s2);
