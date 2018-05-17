@@ -5,29 +5,37 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class ConnectionFoundPanel
+import java.awt.*;
+import javax.swing.*;
+import java.util.Vector; 
+public class ConnectionFoundPanel extends JPanel
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
     /**
      * Constructor for objects of class ConnectionFoundPanel
      */
-    public ConnectionFoundPanel()
+    public ConnectionFoundPanel(Vector<String> result,String student1, String student2)
     {
-        // initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+       setLayout(new GridLayout (4,0));
+       JLabel found = new JLabel("We found a connection!");
+       found.setHorizontalAlignment(JLabel.CENTER);
+       found.setFont(new Font("Serif", Font.BOLD, 20));
+       
+       
+       JPanel p1 = new JPanel(); 
+       JPanel p2 = new JPanel(); 
+       JLabel again = new JLabel("Would you like to find another connection?");
+       again.setFont(new Font("Serif", Font.BOLD, 20));
+       again.setHorizontalAlignment(JLabel.CENTER);
+       
+       JButton b1 = new JButton("quit"); 
+       JButton b2 = new JButton("Find another connection!"); 
+       p1.add(b1); 
+       p1.add(b2); 
+       
+       
+       this.add(found);
+       this.add(p2); 
+       this.add(again); 
+       this.add(p1);
     }
 }

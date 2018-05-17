@@ -5,29 +5,41 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class NoConnectionPanel
-{
-    // instance variables - replace the example below with your own
-    private int x;
-
+import java.awt.*;
+import javax.swing.*;
+public class NoConnectionPanel extends JPanel 
+{   private JLabel unable, again;
+    private JButton quit, restart; 
+    private ImagePanel img;
+    private JPanel quitRestartPanel;
     /**
      * Constructor for objects of class NoConnectionPanel
      */
-    public NoConnectionPanel()
+    public NoConnectionPanel(String student1, String student2) 
     {
-        // initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+       setLayout(new GridLayout (4,0));
+       JLabel l1 = new JLabel("Sorry, we were unable to connect " + student1 + " and " + student2);
+       l1.setHorizontalAlignment(JLabel.CENTER);
+       l1.setFont(new Font("Serif", Font.BOLD, 20));
+       
+       img = new ImagePanel("soSorry.jpg"); 
+       
+       
+       again = new JLabel("Would you like to find another connection?");
+       again.setFont(new Font("Serif", Font.BOLD, 20));
+       again.setHorizontalAlignment(JLabel.CENTER);
+       
+       // create buttons 
+       quit = new JButton("quit"); 
+       restart = new JButton("Find another connection!"); 
+       quitRestartPanel = new JPanel();
+       quitRestartPanel.add(quit); 
+       quitRestartPanel.add(restart); 
+       
+       
+       this.add(l1);
+       this.add(img); 
+       this.add(again); 
+       this.add(quitRestartPanel);
     }
 }
