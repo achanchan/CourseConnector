@@ -1,7 +1,9 @@
 
 /**
+ * IntroPanel extends JPanel and creates a welcome page for the user. IntroPanel includes a welcome message, the author, a little 
+ * description and an image of a web of people. 
  *
- * @author achan
+ * @author achan, alee31, clee48
  * @version 05/14/2018
  */
 

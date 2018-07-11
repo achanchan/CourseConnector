@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=CourseConnectorGUI
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment1.text=\r\n\ The\ main\ method\ creates\ the\ CourseConnectorGraph,\ filled\ the\ graph\ with\ connections\ from\ the\ CS\ Class\ Roster\ and\ creates\ \r\n\ GUI\ for\ students\ to\ find\ connections\ \r\n
+numComments=2

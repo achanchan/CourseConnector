@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=Student
+comment1.params=studentUsername\ studentName
+comment1.target=Student(java.lang.String,\ java.lang.String)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Student\r\n\ \r\n\ @param\ A\ String\ studentUsername\ that\ represents\ the\ username\ of\ the\ student\ and\ String\ studentName\ which\ represents\ the\ \r\n\ name\ of\ the\ student.\r\n
+comment2.params=
+comment2.target=java.lang.String\ getName()
+comment2.text=\r\n\ The\ method\ getName\ is\ a\ "getter"\ method\ that\ returns\ a\ String\ that\ represents\ the\ name\ of\ the\ student.\r\n\r\n\ @return\ \ \ \ A\ String\ that\ represents\ the\ name\ of\ the\ student.\r\n
+comment3.params=
+comment3.target=java.lang.String\ getUsername()
+comment3.text=\r\n\ The\ method\ getUserName\ is\ a\ "getter"\ method\ that\ returns\ a\ String\ that\ represents\ the\ username\ of\ the\ student.\r\n\r\n\ @return\ \ \ \ A\ String\ that\ represents\ the\ username\ of\ the\ student.\r\n
+comment4.params=
+comment4.target=java.lang.String\ toString()
+comment4.text=\r\n\ The\ method\ toString\ returns\ a\ String\ that\ represents\ the\ username\ of\ the\ student.\r\n\r\n\ @return\ \ \ \ A\ String\ that\ represents\ the\ username\ of\ the\ student.\r\n
+comment5.params=args
+comment5.target=void\ main(java.lang.String[])
+comment5.text=\r\n\ The\ main\ method\ to\ test\ the\ Student\ class.\r\n
+numComments=6
