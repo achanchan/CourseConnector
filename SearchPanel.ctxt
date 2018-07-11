@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=SearchPanel
+comment1.params=graph\ result\ student1\ student2
+comment1.target=SearchPanel(CourseConnectorGraph,\ java.util.Vector,\ java.lang.String,\ java.lang.String)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ SearchPanel\r\n\ @param\ CourseConnectorGraph<Student>\ graph\ is\ the\ graph\ of\ students\ \r\n\ Vector<String>\ result\ is\ to\ hold\ the\ vector\ that\ results\ from\ the\ dfs\ traversal\r\n\ String\ student1\ holds\ the\ username\ for\ student1\r\n\ String\ student2\ holds\ the\ username\ for\ student2\r\n
+numComments=2

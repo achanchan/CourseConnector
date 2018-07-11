@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=ImagePanel
+comment1.params=imageName
+comment1.target=ImagePanel(java.lang.String)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ ImagePanel\r\n
+numComments=2

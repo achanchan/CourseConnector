@@ -1,14 +1,14 @@
 
 /**
- * Write a description of class ImagePanel here.
+ * ImagePanel extends JPanel and creates a panel that contains a JLabel of an image
  *
- * @author achan
- * @version (a version number or a date)
+ * @author achan,alee31, clee48
+ * @version 5/17/2018
  */
 import java.awt.*;
 import javax.swing.*;
 public class ImagePanel extends JPanel
-{
+{   
     /**
      * Constructor for objects of class ImagePanel
      */
